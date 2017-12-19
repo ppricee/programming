@@ -15,7 +15,6 @@ public class DepthFirst<N,W>{
     }
 
     public boolean node(INode<N> s, INode<N> e){
-
         INode[] nodes = g.getNodeSet();
         int counter = 0;
         for (int i = 0;i < nodes.length;i++){
@@ -45,18 +44,10 @@ public class DepthFirst<N,W>{
         }
         if (s == e){
             path_exist = true;
-//            if(path_exist == true){
-//                path_stack.push(e);
-//                path = path_stack.getStack();
-////                System.out.println(path.size());
-//                path_exist = true;
-//                return true;
-//            }
             path_stack.push(e);
             path = path_stack.getStack();
-            for(int i = 0; i < path.size();i++){
-                System.out.println("here " + path.fetch(i).getValue());
-            }
+            System.out.println("HERHERHEHRE");
+            System.out.println(path.size());
             return true;
         }
         checked.append(s);
@@ -76,7 +67,6 @@ public class DepthFirst<N,W>{
             }
             for (int i = 0; i < neighbors.size();i++){
                     if (Exists(neighbors.fetch(i)) == true){
-                        System.out.println("path: " + path.size());
                         return true;
                     }
                 }
@@ -102,34 +92,15 @@ public class DepthFirst<N,W>{
      * @return the list of nodes in the path
      */
     public IList<INode<N>> getPath(IGraph<N,W> g, INode<N> s, INode<N> e){
-        System.out.println("Size is " + path.size());
         if (path.size() == 0){
             IList<INode<N>> empty_path = new DoubleLinkList<INode<N>>();
             return empty_path;
         }
         else if (path_exist == false){
-            System.out.println("null");
             return null;
         }
         return path;
     }
 
-//    public static void main(String[] args){
-//        IGraph<String,Integer> g = new Graph<String,Integer>();
-//        g.addNode("start");
-//        g.addNode("1");
-//        g.addNode("2");
-//        g.addNode("end");
-//        g.addNode("4");
-//        g.addNode("3");
-//
-//        g.addEdge(g.fetchNode("start"),g.fetchNode("1"),0);
-//        g.addEdge(g.fetchNode("1"),g.fetchNode("2"),0);
-//        g.addEdge(g.fetchNode("1"),g.fetchNode("3"),0);
-//        g.addEdge(g.fetchNode("2"),g.fetchNode("3"),0);
-//        g.addEdge(g.fetchNode("3"),g.fetchNode("end"),0);
-//        g.addEdge(g.fetchNode("1"),g.fetchNode("4"),0);
-//        System.out.println(pathExists(g, g.fetchNode("start"),g.fetchNode("end")));
-//    }
 
 }
