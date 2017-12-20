@@ -13,7 +13,6 @@ public class DiGraphReader implements IGraphReader {
     Graph<String,Double> r = new Graph();
     INode<String> one;
     INode<String> two;
-//    IList<INode> path = new DoubleLinkList<INode>();
     /**
      * Creates a new graph reader instance
      */
@@ -59,20 +58,24 @@ public class DiGraphReader implements IGraphReader {
      */
     public static void main(String[] argv) throws Exception {
         // This code should work without modification once your reader code is working
-        IGraphReader r = new DiGraphReader();
-        IGraph<String,Double> g = r.read("graphfile.cs2");
+        boolean test;
+        IGraphReader rr = new DiGraphReader();
+        IGraph<String,Double> g = rr.read("graphfile.cs2");
         IEdge<String,Double>[] edges = g.getEdgeSet();
-        for(int i=0; i<edges.length; i++) {
+        for(int i=0; i<edges.length ; i++) {
             System.out.println(edges[i].getSource().getValue()+" -> "+edges[i].getDestination().getValue()+"  w: "+edges[i].getWeight());
         }
         INode<String> start = edges[0].getSource();
-        INode<String> end = edges[5].getDestination();
-        Searcher s = new Searcher();
-//        boolean test;
-//        test = s.pathExists(g, start, end);
-        IList<INode> path = s.getPath(g, start, end);
-        for (int i = 0; i < path.size();i++){
-            System.out.println(path.fetch(i).getValue());
+        INode<String> end = edges[9].getDestination();
+        DepthFirst gh = new DepthFirst(g,start,end);
+
+        IList<INode<String>> all = new DoubleLinkList();
+        all = gh.getPath(g, start,end);
+        for(int j = 0; j < all.size()-1; j++){
+            System.out.println(" " + all.fetch(j).getValue() + " ");
         }
+
+
+
     }
 }

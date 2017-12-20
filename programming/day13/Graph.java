@@ -53,17 +53,32 @@ public class Graph<N,W> implements IGraph<N,W> {
 
     public IEdge<N,W>[] getEdgesFrom(INode<N> n){
         DoubleLinkList<IEdge> temp = new DoubleLinkList();
+
         for(int i = 0; i < edges.size(); i++){
             IEdge<N,W> thisOne = edges.fetch(i);
             if(thisOne.getSource().equals(n)){
                 temp.append(thisOne);
             }
         }
-        IEdge<N,W>[] a = (Edge<N,W>[])new Object[edges.size()];
+        IEdge<N,W>[] a = new IEdge[edges.size()];
+        int z = 0;
         for(int k = 0; k < temp.size(); k++ ){
-            a[k] = temp.fetch(k);
+            if(temp.fetch(k) != null){
+                z++;
+            }
         }
-        return a;
+        IEdge<N,W>[] b = new IEdge[z];
+        int k = 0;
+        for(int j = 0;j < temp.size();j++){
+            if(temp.fetch(k) == null){
+
+            }
+            else{
+                b[k] = temp.fetch(j);
+                k++;
+            }
+        }
+        return b;
     }
 
     public IEdge<N,W>[] getEdgesTo(INode<N> n){

@@ -1,4 +1,4 @@
-public class DepthFirst<N,W>{
+public class DepthFirst<N,W> implements ISearcher<N,W>{
     Stack path_stack = new Stack();
     IGraph<N,W> g;
     INode<N> s;
@@ -14,23 +14,24 @@ public class DepthFirst<N,W>{
         e = end;
     }
 
-    public boolean node(INode<N> s, INode<N> e){
-        INode[] nodes = g.getNodeSet();
-        int counter = 0;
-        for (int i = 0;i < nodes.length;i++){
-            if (nodes[i] == s || nodes[i] == e){
-                counter++;
-            }
-        }
-        if (counter == 2){
-            nodes_exist = true;
-            return true;
-        }
-        else {
-            nodes_exist = false;
-            return false;
-        }
-    }
+//    public boolean node(INode<N> s, INode<N> e){
+//
+//        INode[] nodes = g.getNodeSet();
+//        int counter = 0;
+//        for (int i = 0;i < nodes.length;i++){
+//            if (nodes[i] == s || nodes[i] == e){
+//                counter++;
+//            }
+//        }
+//        if (counter == 2){
+//            nodes_exist = true;
+//            return true;
+//        }
+//        else {
+//            nodes_exist = false;
+//            return false;
+//        }
+//    }
     /**
      * Determines if there is a path without returning the path
      * @param g the graph to search in
@@ -38,16 +39,14 @@ public class DepthFirst<N,W>{
      * @param e node to end at
      * @return if a path of any length exists
      */
-    public boolean Exists(INode<N> s){
-        if (nodes_exist == false){
-            return false;
-        }
+    public boolean pathExists(IGraph<N,W> g, INode<N> s, INode<N> e){
+//        if (nodes_exist == false){
+//            return false;
+//        }
         if (s == e){
             path_exist = true;
             path_stack.push(e);
             path = path_stack.getStack();
-            System.out.println("HERHERHEHRE");
-            System.out.println(path.size());
             return true;
         }
         checked.append(s);
@@ -58,7 +57,7 @@ public class DepthFirst<N,W>{
             neighbors.append(n[i]);
         }
         if(neighbors.size() > 0) {
-            for (int j = 0; j < checked.size()-1;j++) {
+            for (int j = 0; j < checked.size();j++) {
                 for (int i = 0; i < neighbors.size(); i++) {
                   if (checked.fetch(j).equals(neighbors.fetch(i))){
                       neighbors.remove(i);
@@ -66,7 +65,7 @@ public class DepthFirst<N,W>{
                 }
             }
             for (int i = 0; i < neighbors.size();i++){
-                    if (Exists(neighbors.fetch(i)) == true){
+                    if (pathExists(g,neighbors.fetch(i),e) == true){
                         return true;
                     }
                 }
@@ -92,6 +91,7 @@ public class DepthFirst<N,W>{
      * @return the list of nodes in the path
      */
     public IList<INode<N>> getPath(IGraph<N,W> g, INode<N> s, INode<N> e){
+        pathExists(g,s,e);
         if (path.size() == 0){
             IList<INode<N>> empty_path = new DoubleLinkList<INode<N>>();
             return empty_path;
